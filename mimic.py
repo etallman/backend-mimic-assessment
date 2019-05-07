@@ -49,13 +49,38 @@ import sys
 
 def mimic_dict(filename):
     """Returns mimic dict mapping each word to list of words which follow it."""
-    # +++your code here+++
+    
+    with open(filename, "r") as opened:
+        
+        opened_text = opened.read().lower().split()
+
+        mimic_dict = {}     #mimic dictionary
+        last_word = " "     #last string in text/key
+
+        for word in opened_text:
+            #if word isn't in the dictionary, make it a key.
+            #if the key is in there, add the next word as a value in a list.
+            if last_word not in mimic_dict:
+                mimic_dict[last_word]= [word]
+                last_word = word
+            else:
+                mimic_dict[last_word].append(word)
+                last_word = word
+                
+        return mimic_dict
+
     raise NotImplementedError("Get to Work!")
 
 
 def print_mimic(mimic_dict, word):
     """Given mimic dict and start word, prints 200 random words."""
-    # +++your code here+++
+    random_list = []
+    
+    for i in range(200):
+        word = random.choice(mimic_dict.get(word))
+        random_list.append(word)
+    print random_list
+        
     raise NotImplementedError("Get to Work!")
 
 
@@ -66,7 +91,9 @@ def main():
         sys.exit(1)
 
     d = mimic_dict(sys.argv[1])
-    print_mimic(d, '')
+    print d
+   
+    print_mimic(d, ' ')
 
 
 if __name__ == '__main__':
